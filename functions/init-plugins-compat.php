@@ -188,6 +188,41 @@ function hu_set_woocommerce_compat() {
     return;
   }
 
+  //Helper
+  if ( ! function_exists('hu_wc_is_checkout_cart') ) {
+    function hu_wc_is_checkout_cart() {
+      if ( function_exists( 'is_checkout' ) && function_exists( 'is_cart' ) ) {
+        return is_checkout() || is_cart() || defined('WOOCOMMERCE_CHECKOUT') || defined('WOOCOMMERCE_CART');
+      }
+      return false;
+    }
+  }
+
+
+  // Allow HEADER CART OPTIONS in the customizer
+  // Returns a callback function needed by 'active_callback' to enable the options in the customizer
+  add_filter( 'hu_woocommerce_options_enabled', 'hu_wc_options_enabled_cb' );
+  if ( ! function_exists( 'hu_wc_options_enabled_cb' ) ) {
+    function hu_wc_options_enabled_cb() {
+      return '__return_true';
+    }
+  }
+
+  // allow rendering wc cart in header
+  add_filter( 'hu_wc_header_cart_enabled', 'hu_maybe_allow_wc_icon_cart_in_header', 10, 2 );
+  if ( ! function_exists( 'hu_maybe_allow_wc_icon_cart_in_header' ) ) {
+    function hu_maybe_allow_wc_icon_cart_in_header( $state, $bool ) {
+      return $bool;
+    }
+  }
+
+  // allow rendering wc cart widget in header -> we don't display it in cart or checkout
+  add_filter( 'hu_wc_display_widget_cart_in_header', 'hu_maybe_allow_wc_widget_cart_in_header' );
+  if ( ! function_exists( 'hu_maybe_allow_wc_widget_cart_in_header' ) ) {
+    function hu_maybe_allow_wc_widget_cart_in_header( $bool ) {
+      return hu_wc_is_checkout_cart() ? false : $bool;
+    }
+  }
 
 
   //do not show default shop title, we'll do it
@@ -319,6 +354,7 @@ function hu_set_woocommerce_compat() {
     */
     function hu_wc_secondary_color_background_color_prop_selectors( $selectors ) {
       array_push( $selectors,
+        '.widget_shopping_cart_content .buttons a',
         '.themeform .woocommerce #respond input#submit',
         '.themeform .woocommerce a.button',
         '.themeform .woocommerce button.button',
@@ -328,6 +364,16 @@ function hu_set_woocommerce_compat() {
     }
   }
 
+
+  // Ensure cart contents update when products are added to the cart via AJAX
+  add_filter( 'woocommerce_add_to_cart_fragments', 'hu_wc_add_to_cart_fragment' );
+  function hu_wc_add_to_cart_fragment( $fragments ) {
+    //if ( 1 == esc_attr( czr_fn_opt( 'hu_woocommerce_header_cart' ) ) ) {
+      $_cart_count = WC()->cart->get_cart_contents_count();
+      $fragments['.hu-wc-count'] = sprintf( '<span class="count hu-wc-count">%1$s</span>', $_cart_count ? $_cart_count : '' );
+    //}
+    return $fragments;
+  }
 }
 
 

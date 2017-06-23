@@ -723,6 +723,25 @@ if ( ! class_exists( 'HU_utils_settings_map' ) ) :
                     'priority' => '120'
                 )
           ),
+
+          'desktop-wc-cart' => array(
+                'default'   => 'topbar',
+                'control'   => 'HU_controls',
+                'label'     => sprintf( '%1$s : %2$s', __('Desktop devices', 'hueman' ) , __('display a shopping cart', 'hueman') ),
+                'section'   => 'header_menus_sec',
+                'type'      => 'select',
+                'choices'   => array(
+                    'no_search' => __( 'No shopping cart', 'hueman'),
+                    'topbar'    => __( 'Display a shopping cart in the top menu', 'hueman'),
+                    'header'    => __( 'Display a shopping cart in the header menu', 'hueman')
+                ),
+                'ubq_section'   => array(
+                    'section' => 'menu_locations',
+                    'priority' => '125'
+                ),
+                'active_callback' => apply_filters( 'hu_woocommerce_options_enabled', '__return_false' )
+          ),
+
           'header_mobile_menu_layout' => array(
                 'default'   => hu_user_started_before_version( '3.3.8' ) ? 'main_menu' : 'top_menu',
                 'control'   => 'HU_controls',

@@ -28,14 +28,49 @@
 
 
 /* ------------------------------------------------------------------------- *
- *  Header Search
+ *  Header Search and WooCommerce Cart
 /* ------------------------------------------------------------------------- */
 /* Search in topbar + default styling */
-.toggle-search { color: #fff; font-size: 18px; line-height: 24px; cursor: pointer; padding: 13px 20px; display: block; position: absolute; right: 0; top: -50px;
+.topbar-header-utils-inner { position: absolute; right: 0; }
+.topbar-header-utils-inner li { display: inline-block;}
+.toggle-search, .hu-wc-cart { color: #fff; font-size: 18px; line-height: 24px; cursor: pointer; padding: 13px 20px; display: block; position: relative; top: -50px;
 -webkit-box-shadow: -1px 0 0 rgba(255,255,255,0.1);
 box-shadow: -1px 0 0 rgba(255,255,255,0.1); }
 .toggle-search:hover,
 .toggle-search.active { background: rgba(0,0,0,0.15); color: #fff; }
+
+/* Specific for cart */
+.hu-wc-count { position:relative; top: .5em; font-size: .8em; vertical-align: top;}
+/* remove caret */
+.topbar-wc-cart a::after { content: none !important; }
+/* resize submenus (widget) */
+.topbar-wc-cart .sub-menu {
+    width: 250px;
+    top: 0;
+    right: 0;
+    left: auto;
+    padding: 10px;
+}
+.topbar-wc-cart .sub-menu .cart_list {
+  display: block;
+  position: relative;
+  left: 0;
+  width: 100%;
+}
+.topbar-wc-cart .sub-menu .cart_list .empty {
+  padding-top: 10px;
+}
+.topbar-wc-cart .mini_cart_item .remove {
+  padding: 0;
+  margin: 10px 5px;
+}
+.topbar-wc-cart p {
+    clear: both;
+    margin: auto;
+    text-align: center;
+    display: block;
+}
+
 
 .search-expand {
   display: none;
@@ -90,7 +125,9 @@ box-shadow: -1px 0 0 rgba(255,255,255,0.1); }
 
 
 
-
+#nav-mobile .topbar-wc-cart .sub-menu {
+  display: none !important;
+}
 
 
 

@@ -148,7 +148,7 @@ input, textarea, button, select, label { font-family: inherit; }
 
 /* woocommerce */
 /* secondary color for the normal buttons */
-
+.widget_shopping_cart_content .buttons a,
 .themeform .woocommerce #respond input#submit,
 .themeform .woocommerce a.button,
 .themeform .woocommerce button.button,
@@ -163,6 +163,7 @@ input, textarea, button, select, label { font-family: inherit; }
 /* end woocommerce */
 
 /* woocommerce: background and color on hover */
+.widget_shopping_cart_content .buttons a:hover,
 .themeform .woocommerce #respond input#submit:hover,
 .themeform .woocommerce a.button:hover,
 .themeform .woocommerce button.button:hover,
